@@ -3,6 +3,8 @@ const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const assetRoutes = require('./routes/assetRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
+require('dotenv').config();
+
 
 const app = express();
 app.use(express.json());
