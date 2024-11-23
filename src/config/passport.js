@@ -12,13 +12,10 @@ passport.use(
             callbackURL: process.env.GOOGLE_CALLBACK_URL,
         },
         async (accessToken, refreshToken, profile, done) => {
-            console.log('Perfil retornado pelo Google:', profile);
-
             try {
                 let user = await User.findOne({ where: { googleId: profile.id } });
 
                 if (!user) {
-                    console.log('Criando novo usuário...');
                     user = await User.create({
                         username: profile.displayName,
                         email: profile.emails?.[0]?.value || 'email@desconhecido.com',
@@ -26,12 +23,9 @@ passport.use(
                     });
                 }
 
-                const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                console.log('Token JWT gerado:', token);
-
+                const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
                 done(null, { user, token });
             } catch (error) {
-                console.error('Erro ao processar o callback:', error);
                 done(error, null);
             }
         }
