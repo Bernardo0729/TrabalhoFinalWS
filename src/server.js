@@ -13,11 +13,11 @@ app.use('/transactions', transactionRoutes);
 
 const PORT = 3000;
 app.listen(PORT, async () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Funcionado na ${PORT}`);
     try {
         await sequelize.sync();
-        console.log('Banco de dados sincronizado com sucesso!');
+        console.log('Banco de dados sqlLite sincronizado com sucesso!');
     } catch (error) {
-        console.error('Erro ao sincronizar o banco de dados:', error);
+        console.error('Erro ao sincronizar o banco de dados sqlLite:', error);
     }
 });

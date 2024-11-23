@@ -40,4 +40,15 @@ const deleteAsset = async (req, res) => {
     }
 };
 
+const { body } = require('express-validator');
+
+const validateAsset = [
+    body('name').notEmpty().withMessage('O nome do ativo é obrigatório.'),
+    body('symbol').notEmpty().withMessage('O símbolo do ativo é obrigatório.'),
+    body('type')
+        .notEmpty().withMessage('O tipo do ativo é obrigatório.')
+        .isIn(['ação', 'fundo imobiliário']).withMessage('Tipo de ativo inválido.')
+];
+
+
 module.exports = { getAssets, createAsset, updateAsset, deleteAsset };

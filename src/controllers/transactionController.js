@@ -40,4 +40,19 @@ const deleteTransaction = async (req, res) => {
     }
 };
 
+const { body } = require('express-validator');
+
+const validateTransaction = [
+    body('type')
+        .notEmpty().withMessage('O tipo de transação é obrigatório.')
+        .isIn(['compra', 'venda', 'dividendo']).withMessage('Tipo de transação inválido.'),
+    body('amount')
+        .notEmpty().withMessage('O valor é obrigatório.')
+        .isNumeric().withMessage('O valor deve ser um número.'),
+    body('quantity')
+        .optional()
+        .isInt({ min: 1 }).withMessage('A quantidade deve ser um número inteiro maior que 0.')
+];
+
+
 module.exports = { getTransactions, createTransaction, updateTransaction, deleteTransaction };
